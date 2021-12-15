@@ -4,21 +4,16 @@
 
 ## Description
 
-Dockerization of a NestJS typescript project
+How to create tests with NestJS and Jest
 
-## About Docker
-- You don't need to have testing or development facilities right on your PC
-- Avoid headaches when you want to run a different version, issues compatibilities
-- Testing a new technology without installing it on your machine
+### F.I.R.S.T
 
-### Dockerfile 
-Serves to upload our api, I upload only an image with a container
-
-### Docker-compose
-It is always side by side with the doker and helps to manage several images and containers, it helps to keep it more organized with only what we need to make it work
-
-### Docker Hub
-It's like the github of the doker images. We were able to download and upload our images there. There are already many images that can be seen in the docker hub, each one has documentation on how to use
+Use the FIRST concept to develop your unit tests: 
+- Fast: The test must be quick;
+- Independent: One test cannot impact the other, it cannot depend on an agent that changes as a database;
+- Repeatable: It must be deterministic, that is, always return the same result;
+- Self Validation: it must not allow for interpretation, it makes simple validations, it must be objective, passed or not;
+- Timely: It sends the time, it must be developed at the right time. Before the application goes into production, or before developing the feature. 
 
 ## Prerequisites to run
 
@@ -28,7 +23,15 @@ Have installed the following
 
 For WSL2 to use https://docs.docker.com/engine/install/ubuntu/ other distros in same page.
 
+## How to runnings tests
+
+```bash
+$ npm run test:cov
+```
+Before open folder *coverage/index.html* to watch coverage results
+
 ## Installation
+
 If you to change some code in project, use the param *--buid* to the rebuild container with your changes
 ```bash
 $ docker-compose up --build
@@ -46,3 +49,4 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+Open project on http://localhost:3000/graphql
