@@ -10,7 +10,7 @@ export class UserService {
     constructor(
         @InjectRepository(User) //Ta dizendo que o papel de criar a instancia é do repositório
         private _userRepository: Repository<User>
-    ) {}
+    ) { }
 
     async findAllUsers(): Promise<User[]> {
         const users = await this._userRepository.find()
@@ -39,7 +39,7 @@ export class UserService {
 
         if (!userSaved) {
             throw new InternalServerErrorException(
-                'There was an error creating the user'
+                'There was an error creating the user. Try again.'
             )
         }
         return userSaved
