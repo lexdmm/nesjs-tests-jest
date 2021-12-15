@@ -27,6 +27,9 @@ For WSL2 to use https://docs.docker.com/engine/install/ubuntu/ other distros in 
 
 ```bash
 $ npm run test:cov
+$ npm run test:verbose
+$ npm run test:watch
+$ npm run test:debug
 ```
 Before open folder *coverage/index.html* to watch coverage results
 
