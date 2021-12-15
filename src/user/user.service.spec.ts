@@ -41,7 +41,7 @@ describe('UserService', () => {
         mockRepository.delete.mockReset()
     })
 
-    describe('findAllUsers', () => {
+    describe('When findAllUsers', () => {
         it('should be list all users', async () => {
             const user = TestUtil.getValidUser()
             mockRepository.find.mockReturnValue([user, user])
@@ -52,7 +52,7 @@ describe('UserService', () => {
         })
     })
 
-    describe('findUserById', () => {
+    describe('When findUserById', () => {
         it('should be get a specific user', async () => {
             const user = TestUtil.getValidUser()
             mockRepository.findOne.mockReturnValue(user)
@@ -77,7 +77,7 @@ describe('UserService', () => {
         })
     })
 
-    describe('createUser', () => {
+    describe('When createUser', () => {
         it('should return when create a new user', async () => {
             const user = TestUtil.getValidUser()
             mockRepository.save.mockReturnValue(user)
@@ -103,6 +103,58 @@ describe('UserService', () => {
 
             expect(mockRepository.create).toHaveBeenCalledTimes(1)
             expect(mockRepository.save).toHaveBeenCalledTimes(1)
+        })
+    })
+
+    describe('When updateUser', () => {
+        it('shoud be updated a user', async () => {
+            const user = TestUtil.getValidUser()
+            const updatedNameUser = { name: 'Updated Name' }
+            mockRepository.findOne.mockReturnValue(user)
+            mockRepository.update.mockReturnValue({
+                ...user,
+                ...updatedNameUser
+            })
+            mockRepository.create.mockReturnValue({
+                ...user,
+                ...updatedNameUser
+            })
+
+            const updateUser = await service.updateUser('1', {
+                ...user,
+                name: 'Updated Name'
+            })
+
+            expect(updateUser).toMatchObject(updatedNameUser)
+            expect(mockRepository.findOne).toHaveBeenCalledTimes(1)
+            expect(mockRepository.update).toHaveBeenCalledTimes(1)
+            expect(mockRepository.create).toHaveBeenCalledTimes(1)
+        })
+    })
+
+    describe('When deleteUser', () => {
+        it('should be delete a user', async () => {
+            const user = TestUtil.getValidUser()
+            mockRepository.delete.mockReturnValue(user)
+            mockRepository.findOne.mockReturnValue(user)
+
+            const deleteUser = await service.deleteUser('1')
+
+            expect(deleteUser).toBe(true)
+            expect(mockRepository.findOne).toHaveBeenCalledTimes(1)
+            expect(mockRepository.delete).toHaveBeenCalledTimes(1)
+        })
+
+        it('should not delete a inexisting user', async () => {
+            const user = TestUtil.getValidUser()
+            mockRepository.delete.mockReturnValue(null)
+            mockRepository.findOne.mockReturnValue(user)
+
+            const deleteUser = await service.deleteUser('9')
+
+            expect(deleteUser).toBe(false)
+            expect(mockRepository.findOne).toHaveBeenCalledTimes(1)
+            expect(mockRepository.delete).toHaveBeenCalledTimes(1)
         })
     })
 })
